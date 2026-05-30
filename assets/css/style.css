@@ -1,0 +1,209 @@
+/* Colores de Super Casas - El Supermercado de las Casas */
+:root {
+    --azul-sc: #0d3481;   /* Azul oscuro del logo */
+    --verde-sc: #25a041;  /* Verde de la base del logo */
+}
+
+/* Estilo para el fondo del Header */
+.bg-supercasas {
+    background-color: var(--azul-sc) !important;
+}
+
+/* Botón estilo "Publicar anuncio" */
+.btn-sc-outline {
+    color: white;
+    border: 2px solid white;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 8px 20px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.btn-sc-outline:hover {
+    background-color: var(--verde-sc);
+    border-color: var(--verde-sc);
+    color: white;
+}
+
+/* Buscador blanco estilo Fotocasa */
+.search-box {
+    background-color: white;
+    border-radius: 8px;
+    border: none;
+}
+/* ==========================================================================
+   CONFIGURACIÓN DE LA SEGUNDA BARRA (VERDE INSTITUCIONAL)
+   ========================================================================== */
+
+/* Color de fondo usando tu variable exacta del logo */
+.bg-supercasas-verde {
+    background-color: var(--verde-sc) !important;
+}
+
+/* Efecto hover elegante para los enlaces del subheader */
+.link-sub-sc {
+    transition: all 0.3s ease;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+}
+
+.link-sub-sc:hover {
+    color: #ffc107 !important; /* Tono amarillo/dorado suave al pasar el cursor */
+    border-bottom: 2px solid #ffc107;
+}
+
+/* Personalización del menú desplegable vertical de Inmuebles */
+.dropdown-menu-custom {
+    border-radius: 0px !important;
+    border: 1px solid var(--verde-sc) !important;
+    padding: 0 !important;
+}
+
+.dropdown-menu-custom .dropdown-item {
+    padding: 10px 20px !important;
+    font-weight: 500;
+    color: #333;
+    border-bottom: 1px solid #eee; /* Línea de separación sutil */
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu-custom .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu-custom .dropdown-item:hover {
+    background-color: var(--verde-sc) !important;
+    color: white !important;
+}
+
+/* Botón destacado "¿Quieres vender o alquilar?" */
+.btn-vender-sc {
+    border: 1px dashed #fff;
+    transition: all 0.3s ease;
+}
+
+.btn-vender-sc:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff !important;
+    border-style: solid;
+}
+/* ==========================================================================
+   ESTILOS COMPLEMENTARIOS PARA EL CARRUSEL PRINCIPAL
+   ========================================================================== */
+.z-index-1 { z-index: 1; }
+.z-index-2 { z-index: 2; }
+.z-index-3 { z-index: 3; }
+
+/* Forzamos que el contenedor de Bootstrap tenga la altura física */
+#heroCarousel, 
+.carousel-inner, 
+.carousel-item {
+    height: 580px !important;
+}
+
+.hero-bg-img {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100% !important; /* Ahora toma el 100% de los 580px del contenedor */
+}
+.text-shadow-sc {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.btn-sc-intent {
+    border-radius: 50px !important;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-sc-intent:hover {
+    background-color: var(--azul-sc) !important;
+    border-color: var(--azul-sc) !important;
+    transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+    .border-end-md {
+        border-right: 1px solid #dee2e6 !important;
+    }
+}
+
+.modal-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+    z-index: 1000; /* Asegura que esté encima de todo */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-overlay.mostrar {
+    display: flex !important;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px; right: 20px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* 1. Contenedor del Modal: Oscurece el fondo y centra el contenido */
+#login-modal {
+    display: none !important; /* Oculto por defecto */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    z-index: 99999 !important; /* Muy alto para estar sobre todo */
+    display: none; /* Valor inicial para luego cambiar a flex */
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* Esta clase se añade con JavaScript para mostrarlo */
+#login-modal.mostrar {
+    display: flex !important;
+}
+
+/* 2. Caja del Login: Estilos aislados para que no herede de Bootstrap */
+#login-modal .login-box {
+    background: #ffffff !important;
+    padding: 30px !important;
+    border-radius: 12px !important;
+    width: 350px !important;
+    text-align: center !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+    position: relative !important;
+    /* Evitamos que Bootstrap altere el margen */
+    margin: 0 !important; 
+}
+
+/* 3. Estilos específicos para elementos del formulario dentro del modal */
+#login-modal .login-box input {
+    width: 100% !important;
+    padding: 10px !important;
+    margin: 8px 0 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 5px !important;
+    box-sizing: border-box !important; /* Fundamental para que el padding no estire el input */
+}
+
+#login-modal .login-box button {
+    width: 100% !important;
+    padding: 10px !important;
+    background: #28a745 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    margin-top: 10px !important;
+}
