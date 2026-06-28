@@ -1,6 +1,8 @@
 <?php
 // 1. Lógica de Autenticación
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once('../config/database.php');
 
 $error = '';
@@ -9,23 +11,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = new Database();
     $db = $database->getConnection();
 
-    $usuario = $_POST['usuario'];
-    $password = $_POST['password'];
+    $usuario = trim($_POST['usuario'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    // Consulta para verificar usuario (ajusta según tus campos en la tabla 'usuarios')
+    // Consulta para verificar usuario
     $stmt = $db->prepare("SELECT id_usuario, contrasena FROM usuarios WHERE correo = :correo");
     $stmt->execute(['correo' => $usuario]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Verificación simple (¡ojo! en producción usa password_verify)
-    if ($user && $password == $user['contrasena']) {
-        $_SESSION['usuario_id'] = $user['id_usuario']; // Creamos la sesión
-       header("Location: admin/admin.php");
-
-        exit();
+    // ✅ Mejora de seguridad: usar password_verify
+    if ($user) {
+    // Verifica la contraseña contra el hash guardado en la BD
+    if (password_verify($password, $user['contrasena'])) {
+        $_SESSION['usuario_id'] = $user['id_usuario'];
+        header("Location: admin/admin.php");
+        exit;
     } else {
-        echo "Credenciales incorrectas.";
+        $error = "Credenciales incorrectas.";
     }
+} else {
+    $error = "Credenciales incorrectas.";
+}
 }
 ?>
 
@@ -39,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         margin: 0;
         padding: 0;
         height: 100vh;
-        /* Usamos la imagen de tu web como fondo */
         background: url('../assets/img/tu-imagen-de-fondo.jpg') no-repeat center center fixed;
         background-size: cover;
         display: flex;
@@ -48,13 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         font-family: 'Poppins', sans-serif;
     }
 
-    /* El contenedor ahora será semitransparente (Glassmorphism) */
     .login-box {
-        background: rgba(255, 255, 255, 0.85); /* Blanco con 85% de opacidad */
+        background: rgba(255, 255, 255, 0.85);
         padding: 40px;
         border-radius: 15px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        backdrop-filter: blur(10px); /* Efecto de desenfoque al fondo */
+        backdrop-filter: blur(10px);
         width: 350px;
         text-align: center;
     }
@@ -66,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         margin: 10px 0; 
         border: 1px solid #ddd; 
         border-radius: 5px; 
-        box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+        box-sizing: border-box;
     }
     button { 
         background: #28a745; 
@@ -80,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         margin-top: 10px; 
     }
     button:hover { background: #218838; }
+    .error { color: #dc3545; margin: 10px 0; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -91,12 +96,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h2>Iniciar Sesión</h2>
     <p>SAPN Super Casas S.R.L.</p>
+
+    <?php if (!empty($error)): ?>
+        <div class="error"><?= $error ?></div>
+    <?php endif; ?>
     
-    <form method="POST">
-        <input type="text" name="usuario" placeholder="Correo electrónico" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
-        <button type="submit" name="btn_ingresar">INGRESAR</button>
-    </form>
+    <!-- ✅ Agregamos atributos para evitar autocompletado -->
+    <form method="POST" autocomplete="off" novalidate>
+    <input type="text" name="dummy" style="display:none;">
+    <input type="password" name="dummy2" style="display:none;">
+
+    <input type="email" 
+           name="usuario" 
+           placeholder="Correo electrónico" 
+           required
+           value="" 
+           autocomplete="new-email"
+           readonly 
+           onfocus="this.removeAttribute('readonly')">
+
+    <input type="password" 
+           name="password" 
+           placeholder="Contraseña" 
+           required
+           value="" 
+           autocomplete="new-password"
+           readonly 
+           onfocus="this.removeAttribute('readonly')">
+
+    <button type="submit" name="btn_ingresar">INGRESAR</button>
+</form>
     
     <div style="margin-top: 15px;">
         <a href="recuperar.php" style="color: #28a745; font-size: 0.85em;">¿Olvidaste tu contraseña? Clic aquí</a>

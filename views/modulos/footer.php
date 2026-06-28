@@ -5,13 +5,13 @@
             <div class="col-12 col-md-4">
                 <h5 class="text-uppercase fw-bold mb-3" style="color: #28a745 !important;">Super Casas S.R.L.</h5>
                 <p class="small text-white-50 mb-2">
-                    <i class="bi bi-geo-alt-fill me-2" style="color: #28a745 !important;"></i> Calle Belisario Salinas N° 525, Sopocachi
+                    <i class="bi bi-geo-alt-fill me-2" style="color: #28a745 !important;"></i> Calle San Martin # 1844 Zona Rio Seco
                 </p>
                 <p class="small text-white-50 mb-2">
                     <i class="bi bi-envelope-fill me-2" style="color: #28a745 !important;"></i> contacto@supercasas.com.bo
                 </p>
                 <p class="small text-white-50">
-                    <i class="bi bi-telephone-fill me-2" style="color: #28a745 !important;"></i> (+591) 2 423034 - 70000000
+                    <i class="bi bi-telephone-fill me-2" style="color: #28a745 !important;"></i> (+591) 2 423034 - 77242025
                 </p>
             </div>
 

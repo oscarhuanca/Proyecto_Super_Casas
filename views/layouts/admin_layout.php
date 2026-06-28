@@ -1,3 +1,23 @@
+
+<?php
+// Inicia sesión SOLO si no está activa
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Protección: si no hay sesión, salir
+if (!isset($_SESSION['usuario_id']) || empty($_SESSION['usuario_id'])) {
+    header("Location: ../../index.php");
+    exit;
+}
+
+// Desactivar caché
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+?>
+
+<!-- A partir de aquí sigue todo tu código HTML y diseño -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -68,7 +88,7 @@
 </li>
 
             <div class="mt-auto p-3">
-               <a href="../../logout.php" class="nav-link text-danger">Cerrar Sesión</a>
+               <a href="cerrar_sesion.php" class="nav-link text-danger">Cerrar Sesión</a>
 
             </div>
         </nav>
